@@ -23,6 +23,18 @@ class Product
         end
     end
 
+    def purchase
+        if @stock > 0
+            @stock -= 1
+        else
+            raise OutOfStockError, '\'' + @title + '\' is out of stock.'
+        end
+    end
+
+    def return
+        @stock += 1
+    end
+
     def Product.find_by_title(title)
         @@products.find{ |product| product.title == title }
     end

@@ -1,0 +1,7 @@
+1. I spent 3-4 days total, spread out over two weeks or so. Have been busy with work.
+
+2. The most rewarding challenge was to implement oop and class methods and variables with Ruby. I've done this with other languages, but implementing in Ruby is new.
+
+3. I added a zipcode field for the customer and a return method which allows a customer to return an item (and increments that items stock.)
+
+4. The toughest part is always figuring out how classes should interface.
