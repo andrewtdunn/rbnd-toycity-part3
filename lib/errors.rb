@@ -7,3 +7,11 @@ end
 
 class OutOfStockError < StandardError
 end
+
+
+class NoNameError < StandardError
+end
+
+
+class BadReturnError < StandardError
+end

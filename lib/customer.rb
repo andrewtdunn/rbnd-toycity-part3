@@ -1,17 +1,17 @@
-require_relative "transaction"
-
 class Customer
-    attr_reader :name
-    attr_reader :zip
+    attr_reader :name, :zip
     @@customers = []
 
     def initialize(options = {})
         @name = options[:name]
+        if !@name
+            raise NoNameError, 'Customer must have a name'
+        end
         @zip = options[:zip]
         add_to_customers
     end
 
-    def Customer.all
+    def self.all
         @@customers
     end
 
@@ -23,7 +23,7 @@ class Customer
         end
     end
 
-    def Customer.find_by_name(name)
+    def self.find_by_name(name)
         @@customers.find{ |customer| customer.name == name }
     end
 
@@ -32,7 +32,13 @@ class Customer
     end
 
     def return(product)
-        product.return()
+        transaction = Transaction.find_by_product_and_customer(product, self)
+        if transaction
+            product.increment_stock
+            Transaction.delete_by_id(transaction.id)
+        else
+            raise BadReturnError, @name + " did not purchase a " + product.title
+        end
     end
 
 end

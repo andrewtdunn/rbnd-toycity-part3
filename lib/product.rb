@@ -1,7 +1,5 @@
 class Product
-    attr_reader :title
-    attr_reader :stock
-    attr_reader :price
+    attr_reader :title, :stock, :price
     @@products  = []
 
     def initialize(options={})
@@ -11,7 +9,7 @@ class Product
         add_to_products
     end
 
-    def Product.all
+    def self.all
         @@products
     end
 
@@ -23,23 +21,24 @@ class Product
         end
     end
 
-    def purchase
-        if @stock > 0
-            @stock -= 1
-        else
-            raise OutOfStockError, '\'' + @title + '\' is out of stock.'
-        end
+    def purchase(product)
+        Transaction.new(self, product)
     end
 
-    def return
+    def decrement_stock
+        @stock -= 1
+    end
+
+    def increment_stock
         @stock += 1
     end
 
-    def Product.find_by_title(title)
+
+    def self.find_by_title(title)
         @@products.find{ |product| product.title == title }
     end
 
-    def Product.in_stock
+    def self.in_stock
         @@products.reject{ |product| product.stock == 0}
     end
 
